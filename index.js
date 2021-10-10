@@ -1,35 +1,19 @@
 const server = require('http').createServer()
 const io = require('socket.io')(server)
 
-io.on('connection', function (client) {
-
-  console.log('client connect...', client.id);
-
-  client.on('typing', function name(data) {
-    console.log(data);
-    io.emit('typing', data)
+io.on('connection', socket => {
+  console.log('client connect...', socket.id);
+  //for sending message
+  socket.on('send-message', (message) => {
+    io.emit('receive-message', message);  
   })
-
-  client.on('message', function name(data) {
-    console.log(data);
-    io.emit('message', data)
+  //for when user disconnects
+  socket.on('disconnect', () => {
+    console.log('client disconnect...', socket.id)
   })
-
-  client.on('location', function name(data) {
-    console.log(data);
-    io.emit('location', data);
-  })
-
-  client.on('connect', function () {
-  })
-
-  client.on('disconnect', function () {
-    console.log('client disconnect...', client.id)
-    // handleDisconnect()
-  })
-
-  client.on('error', function (err) {
-    console.log('received error from client:', client.id)
+  //for when error occurs
+  socket.on('error', (err) => {
+    console.log('received error from client:', socket.id)
     console.log(err)
   })
 })
