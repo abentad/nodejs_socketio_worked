@@ -1,6 +1,18 @@
-const server = require('http').createServer()
 const mongoose = require('mongoose');
-const io = require('socket.io')(server)
+const express = require('express');
+const app = express();
+const server = require('http').createServer(app);
+
+
+const io = require('socket.io')(server, { cors: { origin: "*" } });
+
+const conversationRoute = require('./routes/conversations_route');
+const messageRoute = require('./routes/messages_route');
+
+app.use(express.json());
+app.use('/api/conversation', conversationRoute);
+app.use('/api/message', messageRoute);
+
 
 io.on('connection', socket => {
   console.log('client connect...', socket.id);
@@ -21,8 +33,7 @@ io.on('connection', socket => {
 
 var server_port = process.env.PORT || 3000;
 const mongooseUrl = "mongodb+srv://abeni:19875321ab@liyucluster.dqtyi.mongodb.net/auth?retryWrites=true&w=majority";
-mongoose.connect(mongooseUrl).then(()=> server.listen(server_port, (err) =>{
-  if(err) throw err;
+mongoose.connect(mongooseUrl).then(()=> app.listen(server_port, () =>{
   console.log('connected to mongoDb');
   console.log(`listening on port ${server_port}`);
 })).catch((e)=> console.log(e));
