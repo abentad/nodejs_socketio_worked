@@ -7,7 +7,9 @@ router.post('/', async (req,res)=>{
     const newConversation = new Conversation({
         members: [
             req.body.senderId,
-            req.body.receiverId
+            req.body.senderName,
+            req.body.receiverId,
+            req.body.receiverName
         ]
     });
 
