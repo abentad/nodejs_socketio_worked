@@ -33,7 +33,7 @@ io.on('connection', socket => {
 
 var server_port = process.env.PORT || 3000;
 const mongooseUrl = "mongodb+srv://abeni:19875321ab@liyucluster.dqtyi.mongodb.net/auth?retryWrites=true&w=majority";
-mongoose.connect(mongooseUrl).then(()=> app.listen(server_port, () =>{
+mongoose.connect(mongooseUrl).then(()=> server.listen(server_port, () =>{
   console.log('connected to mongoDb');
   console.log(`listening on port ${server_port}`);
 })).catch((e)=> console.log(e));
