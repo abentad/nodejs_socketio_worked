@@ -1,12 +1,20 @@
+#add conversation
 ###
 POST http://localhost:3000/api/conversation HTTP/1.1
 Content-Type: application/json
 
 {
-    "senderId": "6162f25f3c27c7550ab83a6d",
-    "recieverId": "616c8bb5462104b525b2e46e"
+    "senderId": "6174567c48d7896a54ca7d5c",
+    "senderName": "abeni",
+    "receiverId": "61745aaaeb8c9a10cc91ce02",
+    "receiverName": "you"
 }
 
+#get conversation
+###
+GET http://localhost:3000/api/conversation?userId=6174567c48d7896a54ca7d5c HTTP/1.1
+
+#user sign up
 ###
 POST http://localhost:3000/api/user HTTP/1.1
 Content-Type: application/json
@@ -15,6 +23,7 @@ Content-Type: application/json
     "name": "you"
 }
 
+#user sign in
 ###
 GET http://localhost:3000/api/user?name=abeni HTTP/1.1
 

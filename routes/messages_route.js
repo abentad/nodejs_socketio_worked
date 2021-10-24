@@ -17,7 +17,7 @@ router.post('/', async(req,res)=>{
 router.get('/', async(req,res)=>{
     try {
         const messages = await Message.find({
-            conversationId: req.body.conversationId
+            conversationId: req.query.conversationId
         });
         res.status(200).json(messages);
     } catch (error) {
