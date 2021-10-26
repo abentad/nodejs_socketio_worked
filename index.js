@@ -21,19 +21,33 @@ app.use('/api/user', userRoute);
 //socket connections 
 io.on('connection', socket => {
   console.log('client connect...', socket.id);
-  //for sending message
+
+  //for sending message to all users
   socket.on('send-message', (message) => {
     io.emit('receive-message', message);  
-  })
+  });
+  
+  //for joining a room
+  socket.on('join-room', (roomName)=> {
+    socket.join(roomName);
+    console.log(`${socket.id} joined ${roomName}`);
+  });
+
+  //for sending message to who are inside the given room users
+  socket.on('send-message-to-room', (message, roomName) => {
+    socket.to(roomName).emit('receive-message-from-room', message);
+  });
+
   //for when user disconnects
   socket.on('disconnect', () => {
-    console.log('client disconnect...', socket.id)
-  })
+    console.log('client disconnect...', socket.id);
+  });
+
   //for when error occurs
   socket.on('error', (err) => { 
-    console.log('received error from client:', socket.id)
-    console.log(err)
-  })
+    console.log('received error from client:', socket.id);
+    console.log(err);
+  });
 })
 
 
