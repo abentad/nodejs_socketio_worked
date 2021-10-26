@@ -9,7 +9,7 @@ router.post('/', async(req,res)=>{
             "senderId": req.body.senderId,
             "senderName": req.body.senderName,
             "text": req.body.text,
-            "timeSent": Date.now()
+            "timeSent": req.body.timeSent
         }
     )
     try {
