@@ -3,7 +3,15 @@ const Message = require('../models/Message');
 
 //add new message
 router.post('/', async(req,res)=>{
-    const newMessage = new Message(req.body);
+    const newMessage = new Message(
+        {
+            "conversationId": req.body.conversationId,
+            "senderId": req.body.senderId,
+            "senderName": req.body.senderName,
+            "text": req.body.text,
+            "timeSent": Date.now()
+        }
+    )
     try {
         const savedMessage = await newMessage.save();
         res.status(201).json(savedMessage);
@@ -13,7 +21,6 @@ router.post('/', async(req,res)=>{
 });
 
 //get message
-
 router.get('/', async(req,res)=>{
     try {
         const messages = await Message.find({

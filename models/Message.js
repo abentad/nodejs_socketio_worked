@@ -8,11 +8,16 @@ const messageSchema = new mongoose.Schema(
         senderId: {
             type: String
         },
+        senderName: {
+            type: String
+        },
         text: {
             type: String
+        },
+        timeSent: {
+            type: Date
         }
-    },
-    {timestamps: true}
+    }
 );
 
 module.exports = mongoose.model('Message', messageSchema);
